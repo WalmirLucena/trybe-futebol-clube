@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       home_team: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
@@ -19,11 +19,11 @@ module.exports = {
         }
       },
       home_team_goals: {
-        type: Sequelize.NUMBER,
-        allowNull: false
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       away_team: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
@@ -33,11 +33,11 @@ module.exports = {
         }
       },
       away_team_goals: {
-        type: Sequelize.NUMBER,
-        allowNull: false
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       in_progress: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       });

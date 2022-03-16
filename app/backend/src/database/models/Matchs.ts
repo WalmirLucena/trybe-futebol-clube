@@ -3,11 +3,11 @@ import db from './index';
 /* import Clubs from './Clubs'; */
 
 class Matchs extends Model {
-  public homeTeam: string;
+  public homeTeam: number;
 
   public homeTeamGoals: number;
 
-  public awayTeam: string;
+  public awayTeam: number;
 
   public awayTeamGoals: number;
 
@@ -16,7 +16,7 @@ class Matchs extends Model {
 
 Matchs.init({
   homeTeam: {
-    type: DataTypes.STRING,
+    type: DataTypes.NUMBER,
     allowNull: false,
   },
   homeTeamGoals: {
@@ -24,7 +24,7 @@ Matchs.init({
     allowNull: false,
   },
   awayTeam: {
-    type: DataTypes.STRING,
+    type: DataTypes.NUMBER,
     allowNull: false,
   },
   awayTeamGoals: {

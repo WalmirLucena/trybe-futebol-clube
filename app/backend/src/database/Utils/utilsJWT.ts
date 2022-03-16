@@ -1,14 +1,14 @@
 import { sign, verify } from 'jsonwebtoken';
-import { readFileSync } from 'fs';
+/* import { readFileSync } from 'fs'; */
 import { IUser } from '../interfaces/userInterface';
 
-const secret = readFileSync(
+/* const secret = readFileSync(
   '../../../jwt.evaluation.key',
   { encoding: 'utf8' },
-);
+); */
 
 const createToken = (data: IUser) => {
-  const token = sign({ data }, secret, {
+  const token = sign({ data }, 'secret', {
     expiresIn: '1d',
     algorithm: 'HS256',
   });
@@ -17,7 +17,7 @@ const createToken = (data: IUser) => {
 };
 
 const verifyToken = (token: string) => {
-  const decoded = verify(token, secret);
+  const decoded = verify(token, 'secret');
 
   return decoded;
 };
