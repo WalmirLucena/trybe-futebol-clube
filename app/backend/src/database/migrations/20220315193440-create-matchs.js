@@ -9,13 +9,25 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       home_team: {
-        type: Sequelize.STRING,
+        type: Sequelize.NUMBER,
         allowNull: false
       },
       home_team_goals: {
         type: Sequelize.NUMBER,
         allowNull: false
-      }
+      },
+      away_team: {
+        type: Sequelize.NUMBER,
+        allowNull: false
+      },
+      away_team_goals: {
+        type: Sequelize.NUMBER,
+        allowNull: false
+      },
+      in_progress: {
+        type: Sequelize.NUMBER,
+        allowNull: false
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
