@@ -7,11 +7,11 @@ const login = async (data: ILogin) => {
 
   const user = await User.findOne({ where: { email, password } });
 
-  if (!user) return ({ message: 'Invalid fields' });
+  if (!user) return ({ message: 'Incorrect email or password' });
 
   const token = createToken(user);
 
-  return token;
+  return { user, token };
 };
 
 export default login;
