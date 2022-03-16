@@ -10,7 +10,7 @@ class Clubs extends Model {
 
 Clubs.init({
   id: {
-    type: DataTypes.STRING,
+    type: DataTypes.INTEGER,
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
