@@ -1,8 +1,8 @@
 import { Model, DataTypes } from 'sequelize';
-import db from '.';
-import clubs from '.';
+import db from './index';
+/* import Clubs from './Clubs'; */
 
-class matchs extends Model {
+class Matchs extends Model {
   public homeTeam: string;
 
   public homeTeamGoals: number;
@@ -14,7 +14,7 @@ class matchs extends Model {
   public inProgress: boolean;
 }
 
-matchs.init({
+Matchs.init({
   homeTeam: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -41,7 +41,7 @@ matchs.init({
   underscored: true,
 });
 
-matchs.belongsTo(clubs, { foreignKey: 'home_team', as: 'clubs' });
-matchs.belongsTo(clubs, { foreignKey: 'away_team', as: 'clubs' });
+/* Matchs.hasOne(Clubs, { foreignKey: 'homeTeam', as: 'clubs' });
+Matchs.hasOne(Clubs, { foreignKey: 'awayTeam', as: 'clubs' }); */
 
-export default matchs;
+export default Matchs;
