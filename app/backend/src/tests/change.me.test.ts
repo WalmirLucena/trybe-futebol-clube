@@ -3,10 +3,11 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import { app } from '../app';
 
-import { Response } from 'superagent';
-import User from '../database/models/User';
-import { describe } from 'mocha';
+import User from '../database/models/User';/* 
+import { describe } from 'mocha'; */
 import userMock from '../mock/model/userMock';
+
+import { Response } from 'superagent';
 
 chai.use(chaiHttp);
 
@@ -35,9 +36,11 @@ describe('Testando a Rota /login', () => {
     .send({
       username: userMock[0].username,
       password: userMock[0].password
-    });
-
-    expect(chaiHttpResponse).to.be.eq(200);
+    })
+    .end(function (err, res) {
+      expect(res).to.have.status(200)    });
+/* 
+    expect(chaiHttpResponse).to.be.eq(200); */
   })
 
   it("Quando o email ou senha é invalido", async ()=> {
@@ -46,9 +49,11 @@ describe('Testando a Rota /login', () => {
     .send({
       username: userMock[1].username,
       password: userMock[1].password
-    });
+    })
+    .end(function (err, res) {
+      expect(res).to.have.status(401)    });
 
-    expect(chaiHttpResponse).to.be.eq(401);
+   /*  expect(chaiHttpResponse).to.be.eq(401); */
   })
 
 

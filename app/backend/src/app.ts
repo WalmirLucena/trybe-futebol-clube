@@ -9,7 +9,7 @@ class App {
     // ...
     this.app = express();
     this.config();
-    this.rotas();
+    /* this.rotas(); */
     // ...
   }
 
@@ -26,13 +26,14 @@ class App {
     // ...
   }
 
-  private rotas(): void {
+  /*  private rotas(): void {
     this.app.use(route);
-  }
+  } */
 
   // ...
   public start(PORT: string | number):void {
     // ...
+    this.app.use(route);
     this.app.listen(PORT, () => console.log(`Rodando na porta: ${PORT}`));
   }
 }
