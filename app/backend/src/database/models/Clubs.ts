@@ -15,7 +15,7 @@ Clubs.init({
     autoIncrement: true,
     primaryKey: true,
   },
-  club_name: {
+  clubName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -27,5 +27,6 @@ Clubs.init({
 });
 
 Clubs.hasMany(Matchs, { foreignKey: 'id', as: 'matchs' });
+/* Clubs.hasMany(Matchs, { foreignKey: 'id', as: 'home_team' }); */
 
 export default Clubs;

@@ -21,6 +21,7 @@ class App {
     };
 
     this.app.use(accessControl);
+    this.app.use(express.json());
     // ...
   }
 

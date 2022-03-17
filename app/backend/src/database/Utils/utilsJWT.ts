@@ -1,13 +1,13 @@
 import { sign, verify } from 'jsonwebtoken';
 /* import { readFileSync } from 'fs'; */
-import { IUser } from '../interfaces/userInterface';
+import { IToken } from '../interfaces/userInterface';
 
 /* const secret = readFileSync(
   '../../../jwt.evaluation.key',
   { encoding: 'utf8' },
 ); */
 
-const createToken = (data: IUser) => {
+const createToken = (data: IToken) => {
   const token = sign({ data }, 'secret', {
     expiresIn: '1d',
     algorithm: 'HS256',

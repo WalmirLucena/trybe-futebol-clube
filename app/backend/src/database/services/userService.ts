@@ -1,3 +1,4 @@
+import { compare } from 'bcryptjs';
 import User from '../models/User';
 import { createToken } from '../Utils/utilsJWT';
 import { ILogin } from '../interfaces/userInterface';
@@ -5,13 +6,26 @@ import { ILogin } from '../interfaces/userInterface';
 const login = async (data: ILogin) => {
   const { email, password } = data;
 
-  const user = await User.findOne({ where: { email, password } });
+  const user = await User.findOne({ where: { email } });
 
-  if (!user) return ({ message: 'Incorrect email or password' });
+  if (!user) return false;
 
-  const token = createToken(user);
+  const passwordCheck = await compare(password, user.password);
 
-  return { user, token };
+  if (!passwordCheck) return ({ message: 'Incorrect email or password' });
+
+  const token = createToken({ email, username: user.username, role: user.role });
+
+  const userFiltered = {
+    user: {
+      id: user.id,
+      username: user.username,
+      role: user.role,
+      email,
+    },
+    token };
+
+  return userFiltered;
 };
 
 export default login;
