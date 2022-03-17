@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import StatusCode from '../Utils/StatusCode';
-import * as UserService from '../services/userService';
+import userService from '../services/userService';
 
 const login = async (req: Request, res: Response) => {
   try {
-    const result = await UserService.default(req.body);
+    const result = await userService.login(req.body);
 
     if (!result) {
       return res.status(StatusCode.UNAUTHORIZED).send({ message: 'Incorrect email or password' });
@@ -13,7 +13,7 @@ const login = async (req: Request, res: Response) => {
     return res.status(StatusCode.OK).json(result);
   } catch (err) {
     return res.status(StatusCode.UNAUTHORIZED)
-      .json({ error: 'Username or password invalid' });
+      .json({ error: `error ${err}` });
   }
 };
 

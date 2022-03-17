@@ -1,8 +1,6 @@
-interface IUser {
+interface IUser extends ILogin{
   username: string,
   role: string,
-  email: string,
-  password: string
 }
 
 interface ILogin {
@@ -16,4 +14,8 @@ interface IToken {
   email: string
 }
 
-export { IToken, ILogin, IUser };
+interface IModel extends IUser{
+  id: string;
+}
+
+export { IToken, ILogin, IUser, IModel };

@@ -1,4 +1,4 @@
-import { compare } from 'bcryptjs';
+import { compareSync } from 'bcryptjs';
 import User from '../models/User';
 import { createToken } from '../Utils/utilsJWT';
 import { ILogin } from '../interfaces/userInterface';
@@ -10,7 +10,7 @@ const login = async (data: ILogin) => {
 
   if (!user) return false;
 
-  const passwordCheck = await compare(password, user.password);
+  const passwordCheck = compareSync(password, user.password);
 
   if (!passwordCheck) return ({ message: 'Incorrect email or password' });
 
@@ -28,4 +28,4 @@ const login = async (data: ILogin) => {
   return userFiltered;
 };
 
-export default login;
+export default { login };
