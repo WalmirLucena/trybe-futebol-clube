@@ -1,44 +1,55 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
-
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
 
 import { Response } from 'superagent';
+import User from '../database/models/User';
+import { describe } from 'mocha';
+import userMock from '../mock/model/userMock';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
-  /**
-   * Exemplo do uso de stubs com tipos
-   */
+describe('Testando a Rota /login', () => {
+  let chaiHttpResponse: Response;
 
-  // let chaiHttpResponse: Response;
-
-  // before(async () => {
-  //   sinon
-  //     .stub(Example, "findOne")
-  //     .resolves({
-  //       ...<Seu mock>
-  //     } as Example);
-  // });
-
-  // after(()=>{
-  //   (Example.findOne as sinon.SinonStub).restore();
-  // })
-
-  // it('...', async () => {
-  //   chaiHttpResponse = await chai
-  //      .request(app)
-  //      ...
-
-  //   expect(...)
-  // });
-
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+  before(async () => {
+    sinon.stub(User, 'findOne').resolves({
+      id: 1,
+      username: 'User',
+      role: 'user',
+      email: 'user@user.com',
+      password: 'secret_user',
+    } as User);
   });
-});
+
+  after(() => {
+    (User.findOne as sinon.SinonStub).restore();
+  });
+
+  it("Quando o login é feito com sucesso", async ()=> {
+    chaiHttpResponse = await chai.request(app)
+    .post('/login')
+    .send({
+      username: userMock[0].username,
+      password: userMock[0].password
+    });
+
+    expect(chaiHttpResponse).to.be.eq(200);
+  })
+
+  it("Quando o email ou senha é invalido", async ()=> {
+    chaiHttpResponse = await chai.request(app)
+    .post('/login')
+    .send({
+      username: userMock[1].username,
+      password: userMock[1].password
+    });
+
+    expect(chaiHttpResponse).to.be.eq(401);
+  })
+
+
+})
