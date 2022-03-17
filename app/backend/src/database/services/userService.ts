@@ -14,7 +14,7 @@ const login = async (data: ILogin) => {
 
   if (!passwordCheck) return ({ message: 'Incorrect email or password' });
 
-  const token = createToken({ email, username: user.username, role: user.role });
+  const token = await createToken({ email, username: user.username, role: user.role });
 
   const userFiltered = {
     user: {
