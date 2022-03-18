@@ -7,11 +7,27 @@ import User from '../database/models/User';/*
 import { describe } from 'mocha'; */
 import userMock from '../mock/model/userMock';
 
-import { Response } from 'superagent';
+import { Response, Request } from 'superagent';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
+
+const mock = [
+  {
+    username: 'Admin',
+    role: 'admin',
+    email: 'admin@admin.com',
+    password: 'secret_admin',
+  },
+  {
+    username: 'Rubao',
+    role: 'rubao',
+    email: 'rubao@user.com',
+    password: 'boladao',
+  },
+];
+
 
 describe('Testando a Rota /login', () => {
   let chaiHttpResponse: Response;
@@ -30,28 +46,31 @@ describe('Testando a Rota /login', () => {
     (User.findOne as sinon.SinonStub).restore();
   });
 
-  it("Quando o login é feito com sucesso", async ()=> {
+  it("Quando o login é feito com sucesso", async () => {
     chaiHttpResponse = await chai.request(app)
     .post('/login')
     .send({
-      username: userMock[0].username,
-      password: userMock[0].password
-    })
-    .end(function (err, res) {
-      expect(res).to.have.status(200)    });
-/* 
-    expect(chaiHttpResponse).to.be.eq(200); */
+      username: mock[0].username,
+      password: mock[0].password
+    });
+    /* .end(async function (err, res) {
+      expect(res).to.have.status(200)    }); */
+    console.log(chaiHttpResponse);
+    
+
+    expect(chaiHttpResponse).to.be.eq(200);
   })
 
   it("Quando o email ou senha é invalido", async ()=> {
     chaiHttpResponse = await chai.request(app)
     .post('/login')
     .send({
-      username: userMock[1].username,
-      password: userMock[1].password
+      username: mock[1].username,
+      password: mock[1].password
     })
-    .end(function (err, res) {
-      expect(res).to.have.status(401)    });
+    .end( function (err, response) {
+      expect(response).to.have.status(401)
+      expect('/home')    });
 
    /*  expect(chaiHttpResponse).to.be.eq(401); */
   })
