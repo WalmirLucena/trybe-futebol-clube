@@ -35,7 +35,13 @@ describe('Testando a Rota /login', () => {
   let chaiHttpResponse: Response;
 
   before(async () => {
-    sinon.stub(User, 'findOne').resolves( mock[0] as User);
+    sinon.stub(User, 'findOne').resolves({
+      id: 1,
+      username: 'User',
+      role: 'user',
+      email: 'user@user.com',
+      password: '$2a$08$Y8Abi8jXvsXyqm.rmp0B.uQBA5qUz7T6Ghlg/CvVr/gLxYj5UAZVO',
+    } as User);
   });
 
   after(() => {
@@ -54,7 +60,7 @@ describe('Testando a Rota /login', () => {
     console.log(chaiHttpResponse);
     
 
-    expect(chaiHttpResponse).to.have.status(200);
+    expect(chaiHttpResponse).to.be.eq(200);
   })
 
   it("Quando o email ou senha é invalido", async ()=> {
