@@ -1,9 +1,13 @@
 import { sign, verify } from 'jsonwebtoken';
+import { readFileSync } from 'fs';
 
 import { IToken } from '../interfaces/userInterface';
 
+const jwtKey = readFileSync('jwt.evaluation.key', { encoding: 'utf-8' })
+  .trim();
+
 const createToken = async (data: IToken) => {
-  const token = sign({ data }, 'secret', {
+  const token = sign({ data }, jwtKey, {
     expiresIn: '1d',
     algorithm: 'HS256',
   });
@@ -12,7 +16,7 @@ const createToken = async (data: IToken) => {
 };
 
 const verifyToken = async (token: string) => {
-  const decoded = verify(token, 'secret');
+  const decoded = verify(token, jwtKey);
 
   return decoded as { data: { role: string } };
 };

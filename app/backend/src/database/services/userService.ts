@@ -12,7 +12,7 @@ const login = async (data: ILogin) => {
 
   const passwordCheck = compareSync(password, user.password);
 
-  if (!passwordCheck) return ({ message: 'Incorrect email or password' });
+  if (!passwordCheck) return false;
 
   const token = await createToken({ email, username: user.username, role: user.role });
 
