@@ -60,7 +60,7 @@ describe('Testando a Rota /login', () => {
     console.log(chaiHttpResponse);
     
 
-    expect(chaiHttpResponse).to.be.eq(200);
+    expect(chaiHttpResponse).to.have.status(200);
   })
 
   it("Quando o email ou senha é invalido", async ()=> {
@@ -69,12 +69,9 @@ describe('Testando a Rota /login', () => {
     .send({
       email: mock[1].email,
       password: mock[1].password
-    })
-    .end( function (err, response) {
-      expect(response).to.have.status(401)
     });
 
-   /*  expect(chaiHttpResponse).to.be.eq(401); */
+    expect(chaiHttpResponse).to.have.status(401);
   })
 
 
