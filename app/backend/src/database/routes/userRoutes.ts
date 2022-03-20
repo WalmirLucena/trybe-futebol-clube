@@ -2,9 +2,9 @@ import { Router } from 'express';
 import { login, loginValidate } from '../controller/userController';
 import validateUser from '../middlewares/userValidations';
 
-const route = Router();
+const loginRoute = Router();
 
-route.post('/login', validateUser, login);
-route.get('/login/validate', loginValidate);
+loginRoute.post('/login', validateUser, login);
+loginRoute.get('/login/validate', loginValidate);
 
-export default route;
+export default loginRoute;

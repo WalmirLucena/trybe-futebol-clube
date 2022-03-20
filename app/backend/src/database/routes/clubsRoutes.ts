@@ -3,7 +3,7 @@ import clubsController from '../controller/clubsController';
 
 const clubsRoute = Router();
 
-clubsRoute.get('/clubs/:id', clubsController.getById);
-clubsRoute.get('/clubs', clubsController.getAll);
+clubsRoute.get('/:id', clubsController.getById);
+clubsRoute.get('/', clubsController.getAll);
 
 export default clubsRoute;

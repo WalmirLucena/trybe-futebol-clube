@@ -1,7 +1,7 @@
 import Clubs from '../models/Clubs';
 
 const getAll = async () => {
-  const clubs = await Clubs.findAll();
+  const clubs = await Clubs.findAll({ raw: true });
 
   if (!clubs) return false;
 

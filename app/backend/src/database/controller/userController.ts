@@ -3,7 +3,7 @@ import StatusCode from '../Utils/StatusCode';
 import userService from '../services/userService';
 import { verifyToken } from '../Utils/utilsJWT';
 
-const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response): Promise<Response> => {
   try {
     const result = await userService.login(req.body);
 
@@ -18,7 +18,7 @@ const login = async (req: Request, res: Response) => {
   }
 };
 
-const loginValidate = async (req:Request, res: Response) => {
+const loginValidate = async (req:Request, res: Response): Promise<Response> => {
   try {
     const { authorization } = req.headers;
 

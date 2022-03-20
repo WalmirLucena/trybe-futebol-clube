@@ -1,6 +1,5 @@
 import * as express from 'express';
-import clubsRoute from './database/routes/clubsRoutes';
-import route from './database/routes/userRoutes';
+import route from './database/routes/index';
 
 class App {
   public app: express.Express;
@@ -35,7 +34,6 @@ class App {
   public start(PORT: string | number):void {
     // ...
     this.app.use(route);
-    this.app.use(clubsRoute);
     this.app.listen(PORT, () => console.log(`Rodando na porta: ${PORT}`));
   }
 }
