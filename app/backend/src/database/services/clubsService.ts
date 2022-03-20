@@ -8,7 +8,7 @@ const getAll = async () => {
   return clubs;
 };
 
-const getById = async (id: string) => {
+const getById = async (id: number) => {
   const club = await Clubs.findOne({ where: { id } });
 
   if (!club) return false;

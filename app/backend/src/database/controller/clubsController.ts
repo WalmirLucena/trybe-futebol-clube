@@ -20,7 +20,7 @@ const getAll = async (_req: Request, res: Response): Promise<Response> => {
 const getById = async (req: Request, res: Response): Promise<Response> => {
   try {
     const { id } = req.params;
-    const result = await clubsService.getById(id);
+    const result = await clubsService.getById(+id);
 
     if (!result) {
       return res.status(StatusCode.NOT_FOUND).send({ message: 'Id not founded' });
