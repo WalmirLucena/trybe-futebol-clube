@@ -3,7 +3,7 @@ import db from '.';
 import Matchs from './Matchs';
 
 class Clubs extends Model {
-  public id?: number;
+  public id: number;
 
   public clubName: string;
 }
@@ -15,7 +15,7 @@ Clubs.init({
     autoIncrement: true,
     primaryKey: true,
   },
-  club_name: {
+  clubName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -26,7 +26,7 @@ Clubs.init({
   underscored: true,
 });
 
-Clubs.hasMany(Matchs, { foreignKey: 'id', as: 'matchs' });
-/* Clubs.hasMany(Matchs, { foreignKey: 'id', as: 'home_team' }); */
+Clubs.hasMany(Matchs, { foreignKey: 'id', as: 'home_team' });
+Clubs.hasMany(Matchs, { foreignKey: 'id', as: 'away_team' });
 
 export default Clubs;
