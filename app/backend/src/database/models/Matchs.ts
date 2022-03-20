@@ -1,8 +1,9 @@
 import { Model, DataTypes } from 'sequelize';
 import db from './index';
-/* import Clubs from './Clubs'; */
 
 class Matchs extends Model {
+  public id: number;
+
   public homeTeam: number;
 
   public homeTeamGoals: number;
@@ -15,6 +16,12 @@ class Matchs extends Model {
 }
 
 Matchs.init({
+  id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+  },
   homeTeam: {
     type: DataTypes.NUMBER,
     allowNull: false,
@@ -40,8 +47,5 @@ Matchs.init({
   timestamps: false,
   underscored: true,
 });
-
-/* Matchs.hasOne(Clubs, { foreignKey: 'homeTeam', as: 'clubs' });
-Matchs.hasOne(Clubs, { foreignKey: 'awayTeam', as: 'clubs' }); */
 
 export default Matchs;
