@@ -4,7 +4,7 @@ import validateUser from '../middlewares/userValidations';
 
 const loginRoute = Router();
 
-loginRoute.post('/login', validateUser, login);
-loginRoute.get('/login/validate', loginValidate);
+loginRoute.post('/', validateUser, login);
+loginRoute.get('/validate', loginValidate);
 
 export default loginRoute;
