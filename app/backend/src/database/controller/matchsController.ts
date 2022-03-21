@@ -49,4 +49,19 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
-export default { getAll, create };
+const finishMatch = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const { updateMatch, message } = await matchsService.finishMatch(+id);
+
+    if (message) return res.status(StatusCode.NOT_FOUND).send({ message });
+
+    return res.status(StatusCode.OK).json(updateMatch);
+  } catch (err) {
+    return res.status(StatusCode.NOT_FOUND)
+      .json({ error: `${err}` });
+  }
+};
+
+export default { getAll, create, finishMatch };

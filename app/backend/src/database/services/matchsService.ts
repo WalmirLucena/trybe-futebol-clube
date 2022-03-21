@@ -52,4 +52,24 @@ const create = async (data: IMatchs) => {
   return { newMatch };
 };
 
-export default { getAll, getByQuery, create };
+const getById = async (id:number) => {
+  const match = await Matchs.findOne({ where: { id } });
+  return match;
+};
+
+const finishMatch = async (id:number) => {
+  const match = await getById(id);
+
+  if (!match) return ({ message: 'No matches found with this id' });
+
+  await Matchs.update({ inProgress: false }, {
+    where: {
+      id,
+    } });
+
+  const updateMatch = await getById(id);
+
+  return { updateMatch };
+};
+
+export default { getAll, getByQuery, create, finishMatch };
