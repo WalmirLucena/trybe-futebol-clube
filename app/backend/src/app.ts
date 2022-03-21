@@ -1,4 +1,5 @@
 import * as express from 'express';
+import * as cors from 'cors';
 import route from './database/routes/index';
 
 class App {
@@ -9,7 +10,7 @@ class App {
     // ...
     this.app = express();
     this.config();
-    /* this.rotas(); */
+    this.app.use(cors());
     // ...
   }
 
@@ -25,10 +26,6 @@ class App {
     this.app.use(express.json());
     // ...
   }
-
-  /*  private rotas(): void {
-    this.app.use(route);
-  } */
 
   // ...
   public start(PORT: string | number):void {

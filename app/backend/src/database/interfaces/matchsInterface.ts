@@ -6,4 +6,9 @@ interface IMatchs {
   inProgress: number;
 }
 
-export default IMatchs;
+interface MatchsResponse extends IMatchs{
+  homeClub: { clubName: string },
+  awayClub: { clubName: string }
+}
+
+export { IMatchs, MatchsResponse };

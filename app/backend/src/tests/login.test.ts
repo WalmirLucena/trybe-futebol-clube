@@ -13,24 +13,6 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-const mock = [
-  {
-    id: 1,
-    username: 'User',
-    role: 'user',
-    email: 'user@user.com',
-    password: 'secret_user',
-  },
-  {
-    id:3,
-    username: 'Rubao',
-    role: 'rubao',
-    email: 'rubao@user.com',
-    password: 'boladao',
-  },
-];
-
-
 describe('Testando a Rota /login', () => {
   let chaiHttpResponse: Response;
 
@@ -53,12 +35,9 @@ describe('Testando a Rota /login', () => {
     .request(app)
     .post('/login')
     .send({
-      email: mock[0].email,
-      password: mock[0].password
+      email: userMock[0].email,
+      password: userMock[0].password
     });
-
-    console.log(chaiHttpResponse);
-    
 
     expect(chaiHttpResponse).to.have.status(200);
   })
@@ -68,8 +47,8 @@ describe('Testando a Rota /login', () => {
     .request(app)
     .post('/login')
     .send({
-      email: mock[0].email,
-      password: mock[0].password
+      email: userMock[0].email,
+      password: userMock[0].password
     });
 
     expect(chaiHttpResponse.body).to.have.property('user');
@@ -86,8 +65,8 @@ describe('Testando a Rota /login', () => {
     chaiHttpResponse = await chai.request(app)
     .post('/login')
     .send({
-      email: mock[1].email,
-      password: mock[1].password
+      email: userMock[1].email,
+      password: userMock[1].password
     });
 
     expect(chaiHttpResponse).to.have.status(401);
@@ -119,8 +98,8 @@ describe("Testando a rota /login/validate", ()=> {
     .request(app)
     .post('/login')
     .send({
-      email: mock[0].email,
-      password: mock[0].password
+      email: userMock[0].email,
+      password: userMock[0].password
     });
 
     chaiHttpResponse = await chai
@@ -137,8 +116,8 @@ describe("Testando a rota /login/validate", ()=> {
     .request(app)
     .post('/login')
     .send({
-      email: mock[0].email,
-      password: mock[0].password
+      email: userMock[0].email,
+      password: userMock[0].password
     });
 
     chaiHttpResponse = await chai

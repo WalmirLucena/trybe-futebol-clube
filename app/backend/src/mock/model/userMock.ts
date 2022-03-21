@@ -1,11 +1,13 @@
 export default [
   {
-    username: 'Admin',
-    role: 'admin',
-    email: 'admin@admin.com',
-    password: 'secret_admin',
+    id: 1,
+    username: 'User',
+    role: 'user',
+    email: 'user@user.com',
+    password: 'secret_user',
   },
   {
+    id: 3,
     username: 'Rubao',
     role: 'rubao',
     email: 'rubao@user.com',

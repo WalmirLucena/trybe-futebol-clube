@@ -6,7 +6,7 @@ import { app } from '../app';
 
 import User from '../database/models/User';
 import Clubs from '../database/models/Clubs';
-import userMock from '../mock/model/userMock';
+import clubMock from '../mock/model/clubMock';
 
 import { Response } from 'superagent';
 
@@ -14,79 +14,13 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-const mock = [
-    {
-      "id": 1,
-      "clubName": "Avaí/Kindermann"
-    },
-    {
-      "id": 2,
-      "clubName": "Bahia"
-    },
-    {
-      "id": 3,
-      "clubName": "Botafogo"
-    },
-    {
-      "id": 4,
-      "clubName": "Corinthians"
-    },
-    {
-      "id": 5,
-      "clubName": "Cruzeiro"
-    },
-    {
-      "id": 6,
-      "clubName": "Ferroviária"
-    },
-    {
-      "id": 7,
-      "clubName": "Flamengo"
-    },
-    {
-      "id": 8,
-      "clubName": "Grêmio"
-    },
-    {
-      "id": 9,
-      "clubName": "Internacional"
-    },
-    {
-      "id": 10,
-      "clubName": "Minas Brasília"
-    },
-    {
-      "id": 11,
-      "clubName": "Napoli-SC"
-    },
-    {
-      "id": 12,
-      "clubName": "Palmeiras"
-    },
-    {
-      "id": 13,
-      "clubName": "Real Brasília"
-    },
-    {
-      "id": 14,
-      "clubName": "Santos"
-    },
-    {
-      "id": 15,
-      "clubName": "São José-SP"
-    },
-    {
-      "id": 16,
-      "clubName": "São Paulo"
-    }
-  ];
 
 
 describe('Testando a Rota /clubs', () => {
   let chaiHttpResponse: Response;
 
   before(async () => {
-    sinon.stub(Clubs, 'findAll').resolves(mock as Clubs[]);
+    sinon.stub(Clubs, 'findAll').resolves(clubMock as Clubs[]);
   });
 
   after(() => {
@@ -126,7 +60,7 @@ describe('Testando a Rota /clubs/:id', () => {
     let chaiHttpResponse: Response;
   
     before(async () => {
-      sinon.stub(Clubs, 'findOne').resolves(mock[0] as Clubs);
+      sinon.stub(Clubs, 'findOne').resolves(clubMock[0] as Clubs);
     });
   
     after(() => {
@@ -146,7 +80,7 @@ describe('Testando a Rota /clubs/:id', () => {
       .request(app)
       .get('/clubs/1');
   
-      expect(chaiHttpResponse.body.id).to.equal(mock[0].id);
+      expect(chaiHttpResponse.body.id).to.equal(clubMock[0].id);
   
     })
   })

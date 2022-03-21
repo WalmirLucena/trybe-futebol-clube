@@ -1,4 +1,4 @@
-import IMatchs from '../interfaces/matchsInterface';
+import { IMatchs } from '../interfaces/matchsInterface';
 import Clubs from '../models/Clubs';
 import Matchs from '../models/Matchs';
 
