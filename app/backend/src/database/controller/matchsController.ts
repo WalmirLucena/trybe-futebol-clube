@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import matchsService from '../services/matchsService';
 import StatusCode from '../Utils/StatusCode';
+import { verifyToken } from '../Utils/utilsJWT';
 
 const getByQuery = async (req: Request, res: Response, inProgress: string) => {
   let query;
@@ -30,11 +31,21 @@ const getAll = async (req: Request, res: Response) => {
 
 const create = async (req: Request, res: Response) => {
   try {
-    const result = await matchsService.create(req.body);
-    return res.status(StatusCode.OK).json(result);
+    const { authorization } = req.headers;
+    const decoded = await verifyToken(String(authorization));
+
+    if (!decoded) throw new Error();
+
+    const { newMatch, message } = await matchsService.create(req.body);
+
+    if (message) {
+      return res.status(StatusCode.UNAUTHORIZED).json({ message });
+    }
+
+    return res.status(StatusCode.OK).json(newMatch);
   } catch (err) {
     return res.status(StatusCode.NOT_FOUND)
-      .json({ error: `${err}` });
+      .json({ message: 'Token invalid' });
   }
 };
 

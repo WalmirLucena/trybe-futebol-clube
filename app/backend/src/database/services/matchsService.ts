@@ -25,11 +25,31 @@ const getAll = async () => {
   return matchs;
 };
 
+const findClubs = async (team:number) => {
+  const clubExists = await Clubs.findOne({
+    where: {
+      id: team,
+    } });
+  return clubExists;
+};
+
 const create = async (data: IMatchs) => {
   const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = data;
+
+  if (homeTeam === awayTeam) {
+    return (
+      { message: 'It is not possible to create a match with two equal teams' });
+  }
+
+  const checkHomeTeam = await findClubs(homeTeam);
+  const checkAwayTeam = await findClubs(awayTeam);
+
+  if (!checkAwayTeam || !checkHomeTeam) return ({ message: 'Team not found' });
+
   const newMatch = await Matchs.create({
     homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress });
-  return newMatch;
+
+  return { newMatch };
 };
 
 export default { getAll, getByQuery, create };
