@@ -1,3 +1,4 @@
+import IMatchs from '../interfaces/matchsInterface';
 import Clubs from '../models/Clubs';
 import Matchs from '../models/Matchs';
 
@@ -24,4 +25,11 @@ const getAll = async () => {
   return matchs;
 };
 
-export default { getAll, getByQuery };
+const create = async (data: IMatchs) => {
+  const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = data;
+  const newMatch = await Matchs.create({
+    homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress });
+  return newMatch;
+};
+
+export default { getAll, getByQuery, create };

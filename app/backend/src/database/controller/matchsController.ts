@@ -28,4 +28,14 @@ const getAll = async (req: Request, res: Response) => {
   }
 };
 
-export default { getAll };
+const create = async (req: Request, res: Response) => {
+  try {
+    const result = await matchsService.create(req.body);
+    return res.status(StatusCode.OK).json(result);
+  } catch (err) {
+    return res.status(StatusCode.NOT_FOUND)
+      .json({ error: `${err}` });
+  }
+};
+
+export default { getAll, create };
