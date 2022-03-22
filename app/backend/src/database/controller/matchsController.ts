@@ -1,7 +1,6 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import matchsService from '../services/matchsService';
 import StatusCode from '../Utils/StatusCode';
-import { verifyToken } from '../Utils/utilsJWT';
 
 const getByQuery = async (req: Request, res: Response, inProgress: string) => {
   let query;
@@ -29,20 +28,27 @@ const getAll = async (req: Request, res: Response) => {
   }
 };
 
+const findClubs = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { awayTeam, homeTeam } = req.body;
+    const result = await matchsService.findClubs(homeTeam, awayTeam);
+    if (!result) {
+      return res
+        .status(StatusCode.UNAUTHORIZED)
+        .json({ message: 'There is no team with such id!' });
+    }
+    next();
+  } catch (err) {
+    return res.status(StatusCode.NOT_FOUND)
+      .json({ error: `${err}` });
+  }
+};
+
 const create = async (req: Request, res: Response) => {
   try {
-    const { authorization } = req.headers;
-    const decoded = await verifyToken(String(authorization));
+    const { newMatch } = await matchsService.create(req.body);
 
-    if (!decoded) throw new Error();
-
-    const { newMatch, message } = await matchsService.create(req.body);
-
-    if (message) {
-      return res.status(StatusCode.UNAUTHORIZED).json({ message });
-    }
-
-    return res.status(StatusCode.OK).json(newMatch);
+    return res.status(StatusCode.CREATED).json(newMatch);
   } catch (err) {
     return res.status(StatusCode.NOT_FOUND)
       .json({ message: 'Token invalid' });
@@ -64,4 +70,4 @@ const finishMatch = async (req: Request, res: Response) => {
   }
 };
 
-export default { getAll, create, finishMatch };
+export default { getAll, create, finishMatch, findClubs };

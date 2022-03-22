@@ -17,6 +17,7 @@ const getByQuery = async (query: boolean) => {
 
 const getAll = async () => {
   const matchs = await Matchs.findAll({
+    attributes: { exclude: ['home_team', 'away_team'] },
     include: [
       { model: Clubs, as: 'awayClub', attributes: ['clubName'] },
       { model: Clubs, as: 'homeClub', attributes: ['clubName'] },
@@ -26,19 +27,17 @@ const getAll = async () => {
 };
 
 const findClubs = async (homeTeam:number, awayTeam: number) => {
-  const clubExists = await Clubs.findOne({
+  const clubExists = await Clubs.findAll({
     where: {
       id: [homeTeam, awayTeam],
-    } });
-  return clubExists;
+    },
+  });
+  if (!clubExists[0] || !clubExists[1]) return false;
+  return true;
 };
 
 const create = async (data: IMatchs) => {
   const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = data;
-
-  const checkTeams = await findClubs(homeTeam, awayTeam);
-
-  if (!checkTeams) return ({ message: 'There is no team with such id!' });
 
   const newMatch = await Matchs.create({
     homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress });
@@ -66,4 +65,4 @@ const finishMatch = async (id:number) => {
   return { updateMatch };
 };
 
-export default { getAll, getByQuery, create, finishMatch };
+export default { getAll, getByQuery, create, finishMatch, findClubs };
