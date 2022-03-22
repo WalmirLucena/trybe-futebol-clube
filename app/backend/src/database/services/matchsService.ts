@@ -65,4 +65,19 @@ const finishMatch = async (id:number) => {
   return { updateMatch };
 };
 
-export default { getAll, getByQuery, create, finishMatch, findClubs };
+const updateTeamGoals = async (id:number, homeTeamGoals: number, awayTeamGoals:number) => {
+  const match = await getById(id);
+
+  if (!match) return ({ message: 'No matches found with this id' });
+
+  await Matchs.update({ homeTeamGoals, awayTeamGoals }, {
+    where: {
+      id,
+    },
+  });
+  const updateMatch = await getById(id);
+
+  return { updateMatch };
+};
+
+export default { getAll, getByQuery, create, finishMatch, findClubs, updateTeamGoals };

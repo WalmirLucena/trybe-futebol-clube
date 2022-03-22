@@ -12,6 +12,7 @@ matchsRoute.post(
   matchsController.findClubs,
   matchsController.create,
 );
+matchsRoute.patch('/:id', matchsController.updateTeamGoals);
 matchsRoute.patch('/:id/finish', matchsController.finishMatch);
 
 export default matchsRoute;
