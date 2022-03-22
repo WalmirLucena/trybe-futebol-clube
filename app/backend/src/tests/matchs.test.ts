@@ -124,7 +124,55 @@ describe("Testando a Rota Post /matchs", () => {
       })
 })
 
-describe("Testando a Rota Patch /matchs", () => {
+describe("Testando a Rota Patch /matchs/:id", () => {
+  let chaiHttpResponse: Response;
+
+before(async () => {
+  sinon.stub(Matchs, 'update').resolves(0 as any);
+});
+
+after(() => {
+  (Matchs.update as sinon.SinonStub).restore();
+});
+
+
+  it("Verifica se o status é o correto", async ()=> {
+      chaiHttpResponse = await chai
+      .request(app)
+      .patch('/matchs/1')
+      .send({
+        homeTeamGoals: 2,
+        awayTeamGoals: 0});
+
+      expect(chaiHttpResponse).to.have.status(200);
+  
+    });
+
+    it("Verifica se as propriedades estão corretas", async ()=> {
+      chaiHttpResponse = await chai
+      .request(app)
+      .patch('/matchs/1')
+      .send({
+        homeTeamGoals: 2,
+        awayTeamGoals: 0});
+
+      expect(chaiHttpResponse).to.have.property('id');
+      expect(chaiHttpResponse).to.have.property('homeTeam');
+      expect(chaiHttpResponse).to.have.property('awayTeam');
+      expect(chaiHttpResponse).to.have.property('homeTeamGoals');
+      expect(chaiHttpResponse).to.have.property('awayTeamGoals');
+
+
+
+
+  
+    });
+
+
+})
+
+
+describe("Testando a Rota Patch /matchs/:id/finish", () => {
     let chaiHttpResponse: Response;
 
   before(async () => {
