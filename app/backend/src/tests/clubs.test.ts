@@ -40,7 +40,7 @@ describe('Testando a Rota /clubs', () => {
     .request(app)
     .get('/clubs');
 
-    expect(chaiHttpResponse.body).to.have.length(15);
+    expect(chaiHttpResponse.body).to.have.length(16);
 
   })
 

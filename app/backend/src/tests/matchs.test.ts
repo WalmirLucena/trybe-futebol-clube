@@ -37,7 +37,7 @@ describe('Testando a Rota GET /matchs', () => {
     .request(app)
     .get('/matchs');
 
-    expect(chaiHttpResponse.body).to.have.length(3);
+    expect(chaiHttpResponse.body).to.have.length(4);
 
   })
 
@@ -60,7 +60,7 @@ describe('Testando a Rota GET /matchs', () => {
     .request(app)
     .get('/matchs?inProgress=true');
 
-    expect(chaiHttpResponse.body).to.have.length(1);
+    expect(chaiHttpResponse.body).to.have.length(4);
 
   })
 
@@ -70,7 +70,7 @@ describe('Testando a Rota GET /matchs', () => {
     .request(app)
     .get('/matchs?inProgress=false');
 
-    expect(chaiHttpResponse.body).to.have.length(1);
+    expect(chaiHttpResponse.body).to.have.length(4);
 
   })
 

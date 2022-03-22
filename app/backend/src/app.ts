@@ -11,6 +11,8 @@ class App {
     this.app = express();
     this.config();
     this.app.use(cors());
+
+    this.app.use(route);
     // ...
   }
 
@@ -30,7 +32,6 @@ class App {
   // ...
   public start(PORT: string | number):void {
     // ...
-    this.app.use(route);
     this.app.listen(PORT, () => console.log(`Rodando na porta: ${PORT}`));
   }
 }
