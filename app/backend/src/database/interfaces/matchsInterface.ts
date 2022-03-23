@@ -7,8 +7,10 @@ interface IMatchs {
 }
 
 interface MatchsResponse extends IMatchs{
-  homeClub: { clubName: string },
-  awayClub: { clubName: string }
+  homeClub: {
+    clubName: string },
+  awayClub: {
+    clubName: string }
 }
 
 export { IMatchs, MatchsResponse };
