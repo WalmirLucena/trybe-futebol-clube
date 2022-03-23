@@ -35,7 +35,20 @@ const drawHomeTeam = (match : any, leaderboard: ILeaderboard[]) =>
     }
   });
 
-const winAwayTeam = (match : any, leaderboard: ILeaderboard[]) =>
+const drawAwayTeam = (match : any, leaderboard: ILeaderboard[]) =>
+  leaderboard.forEach((club) => {
+    const team = club;
+    if (match.awayClub.clubName === club.name) {
+      team.totalGames += 1;
+      team.totalDraws += 1;
+      team.totalPoints += 1;
+      team.goalsFavor += match.awayTeamGoals;
+      team.goalsOwn += match.homeTeamGoals;
+      team.efficiency = +((team.totalPoints / (team.totalGames * 3)) * 100).toFixed(2);
+    }
+  });
+
+const lossHomeTeam = (match : any, leaderboard: ILeaderboard[]) =>
   leaderboard.forEach((club) => {
     const team = club;
     if (match.homeClub.clubName === club.name) {
@@ -44,6 +57,19 @@ const winAwayTeam = (match : any, leaderboard: ILeaderboard[]) =>
       team.goalsFavor += match.homeTeamGoals;
       team.goalsOwn += match.awayTeamGoals;
       team.goalsBalance += match.homeTeamGoals - match.awayTeamGoals;
+      team.efficiency = +((team.totalPoints / (team.totalGames * 3)) * 100).toFixed(2);
+    }
+  });
+
+const lossAwayTeam = (match : any, leaderboard: ILeaderboard[]) =>
+  leaderboard.forEach((club) => {
+    const team = club;
+    if (match.awayClub.clubName === club.name) {
+      team.totalGames += 1;
+      team.totalLosses += 1;
+      team.goalsFavor += match.awayTeamGoals;
+      team.goalsOwn += match.homeTeamGoals;
+      team.goalsBalance += match.awayTeamGoals - match.homeTeamGoals;
       team.efficiency = +((team.totalPoints / (team.totalGames * 3)) * 100).toFixed(2);
     }
   });
@@ -58,6 +84,20 @@ const winHomeTeam = (match : any, leaderboard: ILeaderboard[]) =>
       team.goalsFavor += match.homeTeamGoals;
       team.goalsOwn += match.awayTeamGoals;
       team.goalsBalance += match.homeTeamGoals - match.awayTeamGoals;
+      team.efficiency = +((team.totalPoints / (team.totalGames * 3)) * 100).toFixed(2);
+    }
+  });
+
+const winAwayTeam = (match : any, leaderboard: ILeaderboard[]) =>
+  leaderboard.forEach((club) => {
+    const team = club;
+    if (match.awayClub.clubName === club.name) {
+      team.totalGames += 1;
+      team.totalVictories += 1;
+      team.totalPoints += 3;
+      team.goalsFavor += match.awayTeamGoals;
+      team.goalsOwn += match.homeTeamGoals;
+      team.goalsBalance += match.awayTeamGoals - match.homeTeamGoals;
       team.efficiency = +((team.totalPoints / (team.totalGames * 3)) * 100).toFixed(2);
     }
   });
@@ -77,7 +117,7 @@ const sortClassification = (leaderboard: ILeaderboard[]) =>
     return 0;
   });
 
-const generateLeaderboard = async () => {
+const generateLeaderboardHome = async () => {
   const matchs = await matchsService.getAll();
   const clubs = await clubsService.getAll();
 
@@ -88,7 +128,7 @@ const generateLeaderboard = async () => {
       const result = match.homeTeamGoals - match.awayTeamGoals;
 
       if (result === 0) return drawHomeTeam(match, leaderboard);
-      if (result < 0) return winAwayTeam(match, leaderboard);
+      if (result < 0) return lossHomeTeam(match, leaderboard);
       return winHomeTeam(match, leaderboard);
     }
   });
@@ -96,4 +136,23 @@ const generateLeaderboard = async () => {
   return sortClassification(leaderboard);
 };
 
-export default { generateLeaderboard };
+const generateLeaderboardAway = async () => {
+  const matchs = await matchsService.getAll();
+  const clubs = await clubsService.getAll();
+
+  const leaderboard = putClubsOnTable(clubs);
+
+  matchs.forEach((match) => {
+    if (!match.inProgress) {
+      const result = match.awayTeamGoals - match.homeTeamGoals;
+
+      if (result === 0) return drawAwayTeam(match, leaderboard);
+      if (result < 0) return lossAwayTeam(match, leaderboard);
+      return winAwayTeam(match, leaderboard);
+    }
+  });
+
+  return sortClassification(leaderboard);
+};
+
+export default { generateLeaderboardHome, generateLeaderboardAway };
