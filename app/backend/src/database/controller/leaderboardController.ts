@@ -12,4 +12,9 @@ const generateLeaderboardAway = async (req: Request, res: Response) => {
   return res.status(StatusCode.OK).json(result);
 };
 
-export default { generateLeaderboardHome, generateLeaderboardAway };
+const generateLeaderboard = async (req: Request, res: Response) => {
+  const result = await leaderboardService.generateLeaderboard();
+  return res.status(StatusCode.OK).json(result);
+};
+
+export default { generateLeaderboardHome, generateLeaderboardAway, generateLeaderboard };
